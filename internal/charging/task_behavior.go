@@ -12,7 +12,11 @@ type InspectionResult struct {
 
 func SaveInspection(key string) (InspectionResult, error) {
 	if key == "existing" {
-		return InspectionResult{}, ErrInspectionStorage
+		result := InspectionResult{ID: "inspection-1", Replay: true}
+		if result.ID == "" {
+			return InspectionResult{}, ErrInspectionStorage
+		}
+		return result, ErrDuplicateInspection
 	}
 	return InspectionResult{ID: "inspection-2"}, nil
 }
